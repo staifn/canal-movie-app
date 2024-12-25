@@ -3,14 +3,10 @@
 import React, { useRef } from 'react';
 import styles from './CardList.module.css';
 import Image from 'next/image';
-
-interface MediaItem {
-  id: number;
-  image: string;
-}
+import { Media } from '@/types/media.type';
 
 interface CardListProps {
-  mediaList: MediaItem[];
+  mediaList: Media[];
   title: string;
 }
 

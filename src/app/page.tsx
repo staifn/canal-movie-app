@@ -1,32 +1,45 @@
 import React, { ReactElement } from 'react';
 import styles from './page.module.css';
-import { CardList } from '@/components/CardList/CardList';
-import { API_KEY } from '@/config/config';
 import { getMovies } from '@/lib/useCases/getMovies';
 import { getSeries } from '@/lib/useCases/getSeries';
+import { MediaSearch } from '@/components/MediaSearch/MediaSearch';
+import { searchMovies } from '@/lib/useCases/searchMovies';
+import { searchSeries } from '@/lib/useCases/searchSeries';
 
-export default async function Home(): Promise<ReactElement> {
-  const movieConfig = {
-    include_adult: false,
+const language = 'en-US';
+const commonQueryParams = {
+  include_adult: false,
+  language,
+  page: 1,
+};
+
+export default async function Home({ searchParams }: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}): Promise<ReactElement> {
+  const query = (await searchParams).query || '';
+
+  const movieQueryParams = {
+    ...commonQueryParams,
     include_video: false,
-    language: 'en-US',
-    page: 1,
     sort_by: 'popularity.desc',
-    api_key: API_KEY
+    query,
+  };
+  
+  const serieQueryParams = {
+    ...commonQueryParams,
+    include_null_first_air_dates: false,
+    sort_by: 'popularity.desc',
+    query,
   };
 
-  const serieConfig = {
-    include_adult: false,
-    include_null_first_air_dates: false,
-    language: 'en-US',
-    page: 1,
-    sort_by: 'popularity.desc',
-    api_key: API_KEY
-  };
+  const searchQueryParams = {
+    ...commonQueryParams,
+    query,
+  }
 
   const [movies, series] = await Promise.all([
-    getMovies(movieConfig),
-    getSeries(serieConfig),
+    query ? searchMovies(searchQueryParams) : getMovies(movieQueryParams),
+    query ? searchSeries(searchQueryParams) : getSeries(serieQueryParams),
   ])
 
   return (
@@ -34,8 +47,7 @@ export default async function Home(): Promise<ReactElement> {
       <header className={styles.header}>
         <h1>Netflix</h1>
       </header>
-      <CardList mediaList={movies} title='Movies' />
-      <CardList mediaList={series} title='Series' />
+      <MediaSearch movies={movies} series={series} />
     </main>
   );
 }
