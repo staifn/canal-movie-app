@@ -8,6 +8,13 @@ export interface Movie {
   image: string;
 };
 
+export interface MovieResult {
+  data: Movie[];
+  page: number;
+  totalPages: number;
+  totalResults: number;
+};
+
 export interface MovieAPI {
   adult: boolean,
   backdrop_path: string,
@@ -26,6 +33,8 @@ export interface MovieAPI {
 }
 
 export interface MovieAPIResponse {
-  page: number,
-  results: MovieAPI[]
+  page: number;
+  results: MovieAPI[];
+  total_pages: number;
+  total_results: number;
 };

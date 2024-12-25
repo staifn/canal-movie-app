@@ -1,8 +1,8 @@
 import { fetchMovies } from "../api/movie/movie.api";
 import { mapMovieAPIToMovie } from "../api/movie/movie.mapper";
-import { Movie } from "../api/movie/movie.type";
+import { MovieResult } from "../api/movie/movie.type";
 
-export const getMovies = async (params = {}): Promise<Movie[]> => {
+export const getMovies = async (params = {}): Promise<MovieResult> => {
   const data = await fetchMovies(params);
-  return data.results.map(mapMovieAPIToMovie);
+  return mapMovieAPIToMovie(data);
 };

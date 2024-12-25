@@ -40,13 +40,14 @@ export default async function Home({ searchParams }: {
   const [movies, series] = await Promise.all([
     query ? searchMovies(searchQueryParams) : getMovies(movieQueryParams),
     query ? searchSeries(searchQueryParams) : getSeries(serieQueryParams),
-  ])
+  ]);
 
   return (
     <main className={styles.container}>
       <header className={styles.header}>
         <h1>Netflix</h1>
       </header>
+      
       <MediaSearch movies={movies} series={series} />
     </main>
   );

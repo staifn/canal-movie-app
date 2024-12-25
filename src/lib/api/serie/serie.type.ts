@@ -8,6 +8,13 @@ export interface Serie {
   image: string;
 };
 
+export interface SerieResult {
+  data: Serie[];
+  page: number;
+  totalPages: number;
+  totalResults: number;
+};
+
 export interface SerieAPI {
   adult: boolean;
   backdrop_path: string;
@@ -29,4 +36,6 @@ export interface SerieAPI {
 export interface SerieAPIResponse {
   page: number;
   results: SerieAPI[];
+  total_pages: number;
+  total_results: number;
 };
