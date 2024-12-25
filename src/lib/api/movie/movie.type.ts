@@ -1,4 +1,4 @@
-export type Movie = {
+export interface Movie {
   id: number;
   title: string;
   description: string;
@@ -8,7 +8,7 @@ export type Movie = {
   image: string;
 };
 
-export type MovieAPI = {
+export interface MovieAPI {
   adult: boolean,
   backdrop_path: string,
   genre_ids: number[],
@@ -25,7 +25,7 @@ export type MovieAPI = {
   vote_count: number,
 }
 
-export type MovieAPIResponse = {
+export interface MovieAPIResponse {
   page: number,
   results: MovieAPI[]
 };
