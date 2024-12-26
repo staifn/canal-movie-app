@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import styles from './page.module.css';
 import { getMovies } from '@/lib/useCases/getMovies';
 import { getSeries } from '@/lib/useCases/getSeries';
-import { MediaSearch } from '@/components/MediaSearch/MediaSearch';
 import { searchMovies } from '@/lib/useCases/searchMovies';
 import { searchSeries } from '@/lib/useCases/searchSeries';
+import { MediaSearch } from './components/MediaSearch/MediaSearch';
 
 const language = 'en-US';
 const commonQueryParams = {
