@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useRef, useEffect, useCallback } from 'react';
+import React from 'react';
 import styles from './CardList.module.css';
 import Image from 'next/image';
 import { Media } from '@/types/media.type';
-
-const SCROLL_DISTANCE = 300;
+import { useCardList } from './useCardList';
 
 interface CardListProps {
   mediaList: Media[];
@@ -15,47 +14,14 @@ interface CardListProps {
 }
 
 export const CardList = ({ mediaList, title, onReachEndOfList, page }: CardListProps) => {
-  const mediaRef = useRef<HTMLUListElement | null>(null);
-
-  const scrollList = useCallback(
-    (ref: React.RefObject<HTMLUListElement | null>, direction: 'left' | 'right') => {
-      if (ref.current) {
-        const scrollAmount = direction === 'left' ? -SCROLL_DISTANCE : SCROLL_DISTANCE;
-        ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      }
-    },
-    []
-  );
-
-  const handleScroll = useCallback(() => {
-    if (mediaRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = mediaRef.current;
-
-      if (scrollLeft + clientWidth >= scrollWidth - SCROLL_DISTANCE) {
-        onReachEndOfList();
-      }
-    }
-  }, [onReachEndOfList]);
-
-  useEffect(() => {
-    const listElement = mediaRef.current;
-
-    if (listElement) {
-      listElement.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      if (listElement) {
-        listElement.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [handleScroll]);
-
-  useEffect(() => {
-    if (page === 1 && mediaRef.current) {
-      mediaRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-    }
-  }, [page, mediaList]);
+  const {
+    mediaRef,
+    scrollList
+  } = useCardList({
+    mediaList,
+    page,
+    onReachEndOfList,
+  });
 
   return (
     <section className={styles.listContainer}>
