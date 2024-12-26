@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import styles from './CardList.module.css';
 import Image from 'next/image';
 import { Media } from '@/types/media.type';
@@ -22,25 +22,34 @@ export const CardList = ({ mediaList, title, onReachEndOfList, page }: CardListP
       if (ref.current) {
         const scrollAmount = direction === 'left' ? -SCROLL_DISTANCE : SCROLL_DISTANCE;
         ref.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-
-        if (direction === 'right') {
-          const { scrollLeft, scrollWidth, clientWidth } = ref.current;
-          if (scrollLeft + clientWidth >= scrollWidth - SCROLL_DISTANCE) {
-            onReachEndOfList();
-          }
-        }
       }
     },
-    [onReachEndOfList]
+    []
   );
 
-  const handleScrollLeft = useCallback(() => {
-    scrollList(mediaRef, 'left');
-  }, [scrollList]);
+  const handleScroll = useCallback(() => {
+    if (mediaRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = mediaRef.current;
 
-  const handleScrollRight = useCallback(() => {
-    scrollList(mediaRef, 'right');
-  }, [scrollList]);
+      if (scrollLeft + clientWidth >= scrollWidth - SCROLL_DISTANCE) {
+        onReachEndOfList();
+      }
+    }
+  }, [onReachEndOfList]);
+
+  useEffect(() => {
+    const listElement = mediaRef.current;
+
+    if (listElement) {
+      listElement.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (listElement) {
+        listElement.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [handleScroll]);
 
   useEffect(() => {
     if (page === 1 && mediaRef.current) {
@@ -63,10 +72,10 @@ export const CardList = ({ mediaList, title, onReachEndOfList, page }: CardListP
           ))}
         </ul>
         <div className={styles.scrollButtons}>
-          <button onClick={handleScrollLeft} className={styles.scrollButton}>
+          <button onClick={() => scrollList(mediaRef, 'left')} className={styles.scrollButton}>
             &lt;
           </button>
-          <button onClick={handleScrollRight} className={styles.scrollButton}>
+          <button onClick={() => scrollList(mediaRef, 'right')} className={styles.scrollButton}>
             &gt;
           </button>
         </div>
