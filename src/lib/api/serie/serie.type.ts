@@ -1,20 +1,3 @@
-export interface Serie {
-  id: number;
-  title: string;
-  description: string;
-  releaseDate: string;
-  genres: string;
-  rating: number;
-  image: string;
-};
-
-export interface SerieResult {
-  data: Serie[];
-  page: number;
-  totalPages: number;
-  totalResults: number;
-};
-
 export interface SerieAPI {
   adult: boolean;
   backdrop_path: string;

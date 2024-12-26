@@ -1,3 +1,4 @@
+/* Conteneur principal */
 .container {
   font-family: Arial, sans-serif;
   background-color: #141414;
@@ -8,6 +9,7 @@
   min-height: 100vh;
 }
 
+/* En-tête principal */
 .header {
   text-align: center;
   margin-bottom: 30px;
@@ -18,15 +20,17 @@
   color: #e50914;
 }
 
+/* Section de la liste */
 .listContainer {
   margin-bottom: 30px;
 }
 
+/* En-tête de la liste */
 .listHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .listHeader h2 {
@@ -34,22 +38,33 @@
   margin: 0;
 }
 
-.seeAll {
+.listHeader .scrollButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.scrollButton {
   background-color: #e50914;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 8px 12px;
   cursor: pointer;
   border-radius: 4px;
+  font-size: 1rem;
 }
 
-.seeAll:hover {
+.scrollButton:hover {
   background-color: #f40612;
+}
+
+/* Liste des éléments */
+.listWrapper {
+  position: relative;
 }
 
 .itemList {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -58,43 +73,132 @@
   white-space: nowrap;
 }
 
+/* Éléments individuels */
 .item {
   background-color: #333;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 6px;
   flex: 0 0 auto;
   width: 120px;
   height: 180px;
+  overflow: hidden;
 }
 
 .image {
-  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cardButton {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+/* Bouton de fermeture de la modal */
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.closeButton:hover {
+  color: #e50914;
+}
+
+/* Gestion de l'overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+/* Contenu de la modal */
+.modalContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  max-width: 800px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Image et contenu dans la modal */
+.modalInner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.imageContainer {
+  flex: 1;
+}
+
+.modalImage {
   width: 100%;
   height: auto;
-  object-fit: cover;
+  border-radius: 10px;
 }
 
-.listWrapper {
-  position: relative;
-}
-
-.scrollButtons {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
+.infoContainer {
+  flex: 2;
   display: flex;
-  gap: 5px;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.scrollButton {
-  background-color: #e50914;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 4px;
+.infoContainer .header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.scrollButton:hover {
-  background-color: #f40612;
+.infoContainer .title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.infoContainer .summary {
+  font-size: 1rem;
+  color: #555;
+}
+
+.infoContainer .releaseDate,
+.infoContainer .rating {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .modalInner {
+    flex-direction: row;
+  }
+
+  .itemList {
+    gap: 20px;
+  }
+
+  .listHeader {
+    margin-bottom: 20px;
+  }
 }

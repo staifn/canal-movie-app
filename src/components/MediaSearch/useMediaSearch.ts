@@ -1,15 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Media } from "@/types/media.type";
+import { Media, MediaResult } from "@/types/media.type";
 import { searchMovies } from '@/lib/useCases/searchMovies';
 import { searchSeries } from '@/lib/useCases/searchSeries';
-import { MovieResult } from '@/lib/api/movie/movie.type';
-import { SerieResult } from '@/lib/api/serie/serie.type';
 
 const language = 'en-US';
 interface UseMediaSearch {
-  movies: MovieResult;
-  series: SerieResult;
+  movies: MediaResult;
+  series: MediaResult;
 }
 
 export const useMediaSearch = ({ movies: initialMovies, series: initialSeries }: UseMediaSearch) => {

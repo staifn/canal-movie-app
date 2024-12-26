@@ -1,3 +1,17 @@
-import { Movie } from "@/lib/api/movie/movie.type";
+export interface Media {
+  id: number;
+  title: string;
+  description: string;
+  releaseDate: string;
+  genres: string;
+  rating: number;
+  image: string;
+  voteCount: number;
+};
 
-export type Media = Pick<Movie, 'id' | 'image'>;
+export interface MediaResult {
+  data: Media[];
+  page: number;
+  totalPages: number;
+  totalResults: number;
+};

@@ -1,5 +1,5 @@
 import { Media } from "@/types/media.type";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const SCROLL_DISTANCE = 300;
 
@@ -11,6 +11,8 @@ interface UseCardList {
 
 export const useCardList = ({ mediaList, onReachEndOfList, page }: UseCardList) => {
   const mediaRef = useRef<HTMLUListElement | null>(null);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [activeMediaIndex, setActiveMediaIndex] = useState<number>(0);
 
   const scrollList = useCallback(
     (ref: React.RefObject<HTMLUListElement | null>, direction: 'left' | 'right') => {
@@ -55,5 +57,9 @@ export const useCardList = ({ mediaList, onReachEndOfList, page }: UseCardList) 
   return useMemo(() => ({
     scrollList,
     mediaRef,
-  }), [scrollList]);
+    setIsOpen,
+    modalIsOpen,
+    activeMediaIndex,
+    setActiveMediaIndex
+  }), [activeMediaIndex, modalIsOpen, scrollList]);
 }

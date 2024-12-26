@@ -1,13 +1,12 @@
 'use client';
 
+import { MediaResult } from "@/types/media.type";
 import { CardList } from "../CardList/CardList";
 import { useMediaSearch } from './useMediaSearch';
-import { MovieResult } from "@/lib/api/movie/movie.type";
-import { SerieResult } from "@/lib/api/serie/serie.type";
 
 interface MediaSearchProps {
-  movies: MovieResult;
-  series: SerieResult;
+  movies: MediaResult;
+  series: MediaResult;
 }
 
 export const MediaSearch = ({ movies, series }: MediaSearchProps) => {

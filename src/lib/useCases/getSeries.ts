@@ -1,8 +1,8 @@
+import { MediaResult } from "@/types/media.type";
 import { fetchSeries } from "../api/serie/serie.api";
 import { mapSerieAPIToSerie } from "../api/serie/serie.mapper";
-import { SerieResult } from "../api/serie/serie.type";
 
-export const getSeries = async (params = {}): Promise<SerieResult> => {
+export const getSeries = async (params = {}): Promise<MediaResult> => {
   const data = await fetchSeries(params);
   return mapSerieAPIToSerie(data);
 };
