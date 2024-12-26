@@ -27,7 +27,6 @@ export const CardList = ({ mediaList, title, onReachEndOfList, page }: CardListP
     page,
     onReachEndOfList,
   });
-  
 
   const renderMediaItems = () => {
     return mediaList.map((media, index) => {
