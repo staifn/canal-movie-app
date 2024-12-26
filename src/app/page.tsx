@@ -45,7 +45,7 @@ export default async function Home({ searchParams }: {
   return (
     <main className={styles.container}>
       <header className={styles.header}>
-        <h1>Netflix</h1>
+        <h1>Canal +</h1>
       </header>
       
       <MediaSearch movies={movies} series={series} />

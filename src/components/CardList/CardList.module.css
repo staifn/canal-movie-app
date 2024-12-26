@@ -1,4 +1,3 @@
-/* Conteneur principal */
 .container {
   font-family: Arial, sans-serif;
   background-color: #141414;
@@ -9,23 +8,15 @@
   min-height: 100vh;
 }
 
-/* En-tête principal */
 .header {
   text-align: center;
   margin-bottom: 30px;
 }
 
-.header h1 {
-  font-size: 2.5rem;
-  color: #e50914;
-}
-
-/* Section de la liste */
 .listContainer {
   margin-bottom: 30px;
 }
 
-/* En-tête de la liste */
 .listHeader {
   display: flex;
   justify-content: space-between;
@@ -44,8 +35,8 @@
 }
 
 .scrollButton {
-  background-color: #e50914;
-  color: white;
+  background-color: #fff;
+  color: black;
   border: none;
   padding: 8px 12px;
   cursor: pointer;
@@ -54,10 +45,9 @@
 }
 
 .scrollButton:hover {
-  background-color: #f40612;
+  background-color: #fff;
 }
 
-/* Liste des éléments */
 .listWrapper {
   position: relative;
 }
@@ -73,7 +63,6 @@
   white-space: nowrap;
 }
 
-/* Éléments individuels */
 .item {
   background-color: #333;
   text-align: center;
@@ -82,11 +71,14 @@
   width: 120px;
   height: 180px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .image {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
   object-fit: cover;
   border-radius: 6px;
 }
@@ -98,7 +90,6 @@
   padding: 0;
 }
 
-/* Bouton de fermeture de la modal */
 .closeButton {
   position: absolute;
   top: 10px;
@@ -111,10 +102,9 @@
 }
 
 .closeButton:hover {
-  color: #e50914;
+  color: #fff;
 }
 
-/* Gestion de l'overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -125,7 +115,6 @@
   z-index: 1000;
 }
 
-/* Contenu de la modal */
 .modalContent {
   position: absolute;
   top: 50%;
@@ -141,7 +130,6 @@
   flex-direction: column;
 }
 
-/* Image et contenu dans la modal */
 .modalInner {
   display: flex;
   flex-direction: column;
@@ -188,7 +176,6 @@
   color: #333;
 }
 
-/* Responsive */
 @media (min-width: 768px) {
   .modalInner {
     flex-direction: row;

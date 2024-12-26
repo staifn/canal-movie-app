@@ -20,33 +20,6 @@ export const useMediaSearch = ({ movies: initialMovies, series: initialSeries }:
   const [moviesPage, setMoviesPage] = useState(initialMovies.page);
   const [seriesPage, setSeriesPage] = useState(initialSeries.page);
 
-  useEffect(() => {
-    setMovies(initialMovies.data);
-    setMoviesPage(initialMovies.page);
-  }, [initialMovies]);
-
-  useEffect(() => {
-    setSeries(initialSeries.data);
-    setSeriesPage(initialSeries.page);
-  }, [initialSeries]);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(inputValue);
-    }, 1000);
-
-    return () => clearTimeout(handler);
-  }, [inputValue]);
-
-  useEffect(() => {
-    const queryParam = searchParams.get('query') || '';
-    if (queryParam === debouncedValue) return;
-  
-    const newParams = new URLSearchParams(searchParams.toString());
-    newParams.set('query', debouncedValue);
-    router.push(`?${newParams.toString()}`);
-  }, [debouncedValue, router, searchParams]);
-
   const handleSearchMovies = useCallback(async (movies: Media[], query: string, page: number) => {
     const moviesQueryParams = {
       include_adult: false,
@@ -88,6 +61,33 @@ export const useMediaSearch = ({ movies: initialMovies, series: initialSeries }:
     setSeriesPage(seriesPage + 1);
     handleSearchSeries(series, debouncedValue, seriesPage + 1);
   }, [debouncedValue, handleSearchSeries, initialSeries.totalPages, series, seriesPage]);
+
+  useEffect(() => {
+    setMovies(initialMovies.data);
+    setMoviesPage(initialMovies.page);
+  }, [initialMovies]);
+
+  useEffect(() => {
+    setSeries(initialSeries.data);
+    setSeriesPage(initialSeries.page);
+  }, [initialSeries]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(inputValue);
+    }, 1000);
+
+    return () => clearTimeout(handler);
+  }, [inputValue]);
+
+  useEffect(() => {
+    const queryParam = searchParams.get('query') || '';
+    if (queryParam === debouncedValue) return;
+  
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set('query', debouncedValue);
+    router.push(`?${newParams.toString()}`);
+  }, [debouncedValue, router, searchParams]);
 
   return useMemo(() => ({
     setInputValue,

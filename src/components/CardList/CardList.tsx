@@ -39,7 +39,7 @@ export const CardList = ({ mediaList, title, onReachEndOfList, page }: CardListP
       return (
         <li key={media.id} className={styles.item}>
           <button onClick={handleClick} className={styles.cardButton}>
-            <Image src={media.image} alt={`Movie ${media.id}`} width={120} height={180} className={styles.image} />
+            <Image src={media.image} alt={`Movie ${media.id}`} width={120} height={180} className={styles.image} priority={true} />
           </button>
         </li>
       );

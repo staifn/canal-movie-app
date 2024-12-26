@@ -1,6 +1,6 @@
-import { IMAGE_BASE_URL } from "@/config/config";
 import { MovieAPIResponse } from "./movie.type";
 import { MediaResult } from "@/types/media.type";
+import { setImage } from "@/utils/setImage";
 
 export const mapMovieAPIToMovie = (data: MovieAPIResponse): MediaResult => ({
   data: data.results.map(movie => ({
@@ -10,7 +10,7 @@ export const mapMovieAPIToMovie = (data: MovieAPIResponse): MediaResult => ({
     releaseDate: movie.release_date,
     genres: movie.genre_ids.join(', '),
     rating: movie.vote_average,
-    image: IMAGE_BASE_URL + movie.poster_path,
+    image: setImage(movie.poster_path),
     voteCount: movie.vote_count,
   })),  
   page: data.page,

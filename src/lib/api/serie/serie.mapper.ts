@@ -1,6 +1,6 @@
-import { IMAGE_BASE_URL } from "@/config/config";
 import { SerieAPIResponse } from "./serie.type";
 import { MediaResult } from "@/types/media.type";
+import { setImage } from "@/utils/setImage";
 
 export const mapSerieAPIToSerie = (data: SerieAPIResponse): MediaResult => ({  
   data: data.results.map(serie => ({
@@ -10,7 +10,7 @@ export const mapSerieAPIToSerie = (data: SerieAPIResponse): MediaResult => ({
     releaseDate: serie.first_air_date,
     genres: serie.genre_ids.join(', '),
     rating: serie.vote_average,
-    image: serie.poster_path ? IMAGE_BASE_URL + serie.poster_path : '/images/netflix.svg',
+    image: setImage(serie.poster_path),
     voteCount: serie.vote_count,
   })),  
   page: data.page,
