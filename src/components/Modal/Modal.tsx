@@ -34,7 +34,7 @@ export const Modal = ({ isOpen, onClose, onAfterOpen, data }: ModalProps) => {
         {image ? <div className={styles.imageContainer}>
           <Image
             src={image}
-            alt={title}
+            alt={title || 'image title'}
             className={styles.image}
             width={300}
             height={450}

@@ -1,12 +1,12 @@
 export interface Media {
   id: number;
-  title: string;
-  description: string;
-  releaseDate: string;
-  genres: string;
-  rating: number;
+  title: string | null;
+  description: string | null;
+  releaseDate: string | null;
+  genres: string | null;
+  rating: number | null;
   image: string;
-  voteCount: number;
+  voteCount: number | null;
 };
 
 export interface MediaResult {

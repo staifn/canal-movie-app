@@ -1,0 +1,1 @@
+export { searchSeries } from './searchSeries';

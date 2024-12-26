@@ -8,7 +8,7 @@ export const mapSerieAPIToSerie = (data: SerieAPIResponse): MediaResult => ({
     title: serie.name,
     description: serie.overview,
     releaseDate: serie.first_air_date,
-    genres: serie.genre_ids.join(', '),
+    genres: serie.genre_ids?.join(', ') || null,
     rating: serie.vote_average,
     image: setImage(serie.poster_path),
     voteCount: serie.vote_count,
