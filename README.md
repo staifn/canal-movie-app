@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Movies App
+
+This is a [Next.js](https://nextjs.org) project designed to fetch, search, and display movies and TV series using a RESTful API. The project uses TypeScript, React, and Axios to handle API requests, and Jest for testing.
+
+## Features
+
+- **Movies and TV Series Display:** Browse movies and TV series with detailed information.
+- **Search Functionality:** Search movies and series by title.
+- **Responsive Design:** Optimized for desktop and mobile devices.
+- **Modal Popups:** View detailed information in a modal.
+- **Environment-Specific Configuration:** Use `.env` files for API keys and other secrets.
+- **Unit Testing:** Includes Jest tests for API calls and logic validation.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js (LTS recommended)
+- npm
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/staifn/canal-movie-app.git
+   cd canal-movie-app
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Create environment files:
+   - Copy `.env.example` to `.env.local` for development and `.env.test` for testing.
+   - Add your `NEXT_PUBLIC_API_KEY` for the movie database in these files:
+     ```bash
+     NEXT_PUBLIC_API_KEY=your_api_key
+     ```
+
+### Development Server
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Running Tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run the unit tests with Jest:
 
-## Learn More
+```bash
+npm run test
+```
 
-To learn more about Next.js, take a look at the following resources:
+Tests are configured to use the `.env.test` environment for mocking API keys and other variables.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```plaintext
+src/
+├── app/
+│   ├── components/
+│   │   ├── CardList.tsx
+│   │   ├── Modal.tsx
+│   │   └── ...
+│   ├── pages/
+│   │   ├── index.tsx
+│   │   └── ...
+├── lib/
+│   ├── api/
+│   │   ├── movie/
+│   │   ├── serie/
+│   │   └── ...
+│   ├── useCases/
+│   │   ├── getMovies.ts
+│   │   ├── getSeries.ts
+│   │   └── ...
+│   └── ...
+├── utils/
+│   ├── logError.ts
+│   ├── setImage.ts
+│   └── ...
+└── ...
+```
