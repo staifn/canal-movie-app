@@ -1,0 +1,1 @@
+export { SerieSearchResults } from './SerieSearchResults';
