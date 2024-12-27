@@ -45,7 +45,6 @@ export default async function Home({ searchParams }: {
       <header className={styles.header}>
         <h1>Canal +</h1>
       </header>
-      
       <MediaSearch movies={movies} series={series} />
     </main>
   );

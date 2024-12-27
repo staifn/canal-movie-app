@@ -1,3 +1,5 @@
+'use client'
+
 import { MediaResult } from "@/types/media.type";
 import { useMovieSearchResults } from "./useMovieSearchResults";
 import { CardList } from "@/components/CardList";

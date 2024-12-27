@@ -42,7 +42,7 @@ export const useCardList = ({ mediaList, onReachEndOfList, page }: UseCardList) 
   const resetScroll = useCallback(() => {
     isResettingScroll.current = true;
     if(mediaRef.current) {
-      mediaRef.current.scrollTo({ left: 0, behavior: "instant" });
+      mediaRef.current.scrollTo?.({ left: 0, behavior: "instant" });
     }
     setTimeout(() => isResettingScroll.current = false, 200);
   }, []);
