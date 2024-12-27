@@ -1,5 +1,5 @@
 import { Media } from "@/types/media.type";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 const SCROLL_DISTANCE = 300;
 
@@ -11,8 +11,10 @@ interface UseCardList {
 
 export const useCardList = ({ mediaList, onReachEndOfList, page }: UseCardList) => {
   const mediaRef = useRef<HTMLUListElement | null>(null);
+  const isResettingScroll = useRef(false);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [activeMediaIndex, setActiveMediaIndex] = useState<number>(0);
+  const [isScrolling, setIsScrolling] = useState(false);
 
   const scrollList = useCallback(
     (ref: React.RefObject<HTMLUListElement | null>, direction: 'left' | 'right') => {
@@ -25,14 +27,25 @@ export const useCardList = ({ mediaList, onReachEndOfList, page }: UseCardList) 
   );
 
   const handleScroll = useCallback(() => {
-    if (mediaRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = mediaRef.current;
+    if (!mediaRef.current || isScrolling || isResettingScroll.current === true) return;
 
-      if (scrollLeft + clientWidth >= scrollWidth - SCROLL_DISTANCE) {
-        onReachEndOfList();
-      }
+    const { scrollLeft, scrollWidth, clientWidth } = mediaRef.current;
+    if (scrollLeft + clientWidth >= scrollWidth - SCROLL_DISTANCE) {
+      setIsScrolling(true);
+      onReachEndOfList();
+      setTimeout(() => {
+        setIsScrolling(false);
+      }, 200);
     }
-  }, [onReachEndOfList]);
+  }, [isScrolling, isResettingScroll, onReachEndOfList]);
+
+  const resetScroll = useCallback(() => {
+    isResettingScroll.current = true;
+    if(mediaRef.current) {
+      mediaRef.current.scrollTo({ left: 0, behavior: "instant" });
+    }
+    setTimeout(() => isResettingScroll.current = false, 200);
+  }, []);
 
   useEffect(() => {
     const listElement = mediaRef.current;
@@ -48,11 +61,11 @@ export const useCardList = ({ mediaList, onReachEndOfList, page }: UseCardList) 
     };
   }, [handleScroll]);
 
-  useEffect(() => {
-    if (page === 1 && mediaRef.current) {
-      mediaRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+  useLayoutEffect(() => {
+    if (page === 1) {
+      resetScroll()
     }
-  }, [page, mediaList]);
+  }, [page, mediaList, resetScroll]);
 
   return useMemo(() => ({
     scrollList,
@@ -60,6 +73,6 @@ export const useCardList = ({ mediaList, onReachEndOfList, page }: UseCardList) 
     setIsOpen,
     modalIsOpen,
     activeMediaIndex,
-    setActiveMediaIndex
+    setActiveMediaIndex,
   }), [activeMediaIndex, modalIsOpen, scrollList]);
-}
+};
