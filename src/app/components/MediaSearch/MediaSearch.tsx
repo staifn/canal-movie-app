@@ -1,8 +1,9 @@
 'use client';
 
 import { MediaResult } from "@/types/media.type";
-import { CardList } from "../CardList/CardList";
 import { useMediaSearch } from './useMediaSearch';
+import { MovieSearchResults } from "../MovieSearchResults/MovieSearchResults";
+import { SerieSearchResults } from "../SerieSearchResults/SerieSearchResults";
 
 interface MediaSearchProps {
   movies: MediaResult;
@@ -12,14 +13,8 @@ interface MediaSearchProps {
 export const MediaSearch = ({ movies, series }: MediaSearchProps) => {
   const {
     inputValue,
-    filteredMovies,
-    filteredSeries,
-    moviesPage,
-    seriesPage,
-    handleReachEndOfMovieList,
-    handleReachEndOfSerieList,
     setInputValue
-  } = useMediaSearch({ movies, series })
+  } = useMediaSearch()
 
   return (
     <>
@@ -29,8 +24,8 @@ export const MediaSearch = ({ movies, series }: MediaSearchProps) => {
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="Recherchez..."
       />
-      {filteredMovies.length ? <CardList mediaList={filteredMovies} title='Movies' onReachEndOfList={handleReachEndOfMovieList} page={moviesPage} /> : null}
-      {filteredSeries.length ? <CardList mediaList={filteredSeries} title='Series' onReachEndOfList={handleReachEndOfSerieList} page={seriesPage} /> : null}
+      <MovieSearchResults movies={movies} inputValue={inputValue} />
+      <SerieSearchResults series={series} inputValue={inputValue} />
     </>
   );
 }

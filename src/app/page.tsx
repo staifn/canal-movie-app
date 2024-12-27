@@ -22,14 +22,12 @@ export default async function Home({ searchParams }: {
     ...commonQueryParams,
     include_video: false,
     sort_by: 'popularity.desc',
-    query,
   };
   
   const serieQueryParams = {
     ...commonQueryParams,
     include_null_first_air_dates: false,
     sort_by: 'popularity.desc',
-    query,
   };
 
   const searchQueryParams = {
