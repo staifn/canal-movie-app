@@ -1,7 +1,7 @@
 import { getSeries as getSeriesUseCase } from '@/lib/useCases/getSeries';
 import { searchSeries as searchSeriesUseCase } from '@/lib/useCases/searchSeries';
 import { MediaResult } from '@/types/media.type';
-import { useMediaSearchResults } from '../../hooks/useMediaSearchResult';
+import { useMediaSearchResults } from '../../hooks/useMediaSearchResults';
 
 interface SeriesQueryParams extends Record<string, unknown> {
   include_adult: boolean;

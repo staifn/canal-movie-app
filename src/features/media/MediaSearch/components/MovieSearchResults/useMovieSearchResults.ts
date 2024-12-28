@@ -1,7 +1,7 @@
 import { getMovies as getMoviesUseCase } from '@/lib/useCases/getMovies';
 import { searchMovies as searchMoviesUseCase } from '@/lib/useCases/searchMovies';
 import { MediaResult } from '@/types/media.type';
-import { useMediaSearchResults } from '../../hooks/useMediaSearchResult';
+import { useMediaSearchResults } from '../../hooks/useMediaSearchResults';
 
 interface MovieQueryParams extends Record<string, unknown> {
   include_adult: boolean;
