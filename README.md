@@ -1,6 +1,15 @@
 # Next.js Movies App
 
-This is a [Next.js](https://nextjs.org) project designed to fetch, search, and display movies and TV series using a RESTful API. The project uses TypeScript, React, and Axios to handle API requests, and Jest for testing.
+This is a [Next.js](https://nextjs.org) project designed to fetch, search, and display movies and TV series using a RESTful API. The project uses TypeScript, React, Axios, and React Query for data management and includes Jest for testing.
+
+🚀 **Lighthouse Scores** 🚀
+
+Our app has scored a perfect 100 in all categories on Lighthouse:
+
+- **Performance**: 🟢 **100** - Fast and smooth, even with lots of data!
+- **Accessibility**: 🟢 **100** - Accessible to everyone, no matter their needs.
+- **Best Practices**: 🟢 **100** - Everything's in order with best development practices.
+- **SEO**: 🟢 **100** - Optimized for search engines, making it easy to find!
 
 ## Features
 
@@ -9,7 +18,6 @@ This is a [Next.js](https://nextjs.org) project designed to fetch, search, and d
 - **Responsive Design:** Optimized for desktop and mobile devices.
 - **Modal Popups:** View detailed information in a modal.
 - **Environment-Specific Configuration:** Use `.env` files for API keys and other secrets.
-- **Unit Testing:** Includes Jest tests for API calls and logic validation.
 
 ## Getting Started
 
@@ -37,9 +45,10 @@ Ensure you have the following installed:
 
 3. Create environment files:
    - Copy `.env.example` to `.env.local` for development and `.env.test` for testing.
-   - Add your `NEXT_PUBLIC_API_KEY` for the movie database in these files:
+   - Add your `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_API_KEY`:
      ```bash
-     NEXT_PUBLIC_API_KEY=your_api_key
+     NEXT_PUBLIC_API_URL=https://example.org
+     NEXT_PUBLIC_API_KEY=12345
      ```
 
 ### Development Server
@@ -52,41 +61,86 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
+## Testing
+
 ### Running Tests
 
-Run the unit tests with Jest:
+Run the unit and integration tests with Jest:
 
 ```bash
 npm run test
 ```
-
-Tests are configured to use the `.env.test` environment for mocking API keys and other variables.
 
 ## Project Structure
 
 ```plaintext
 src/
 ├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── page.module.css
 │   ├── components/
-│   │   ├── CardList.tsx
-│   │   ├── Modal.tsx
-│   │   └── ...
-│   ├── pages/
-│   │   ├── index.tsx
-│   │   └── ...
+│   │   ├── CardList/
+│   │   │   ├── CardList.tsx
+│   │   │   ├── CardList.module.css
+│   │   │   ├── useCardList.ts
+│   │   │   └── index.ts
+│   │   ├── Modal/
+│   │   │   ├── Modal.tsx
+│   │   │   └── index.ts
+├── config/
+│   └── config.ts
+├── features/
+│   ├── media/MediaSearch/
+│   │   ├── components/
+│   │   │   ├── MovieSearchResults.tsx
+│   │   │   ├── useMovieSearchResults.ts
+│   │   │   ├── SerieSearchResults.tsx
+│   │   │   └── index.ts
+│   │   ├── hooks/
+│   │   │   ├── useMediaSearchResults.ts
+│   │   └── MediaSearch.tsx
 ├── lib/
 │   ├── api/
 │   │   ├── movie/
+│   │   │   ├── movie.api.ts
+│   │   │   ├── movie.api.test.ts
+│   │   │   ├── movie.mapper.ts
+│   │   │   ├── movie.type.ts
+│   │   │   └── axiosInstance.ts
 │   │   ├── serie/
-│   │   └── ...
+│   │   │   └── ...
 │   ├── useCases/
 │   │   ├── getMovies.ts
+│   │   ├── getMovies.test.ts
+│   │   ├── searchMovies.ts
 │   │   ├── getSeries.ts
-│   │   └── ...
-│   └── ...
+│   │   └── searchSeries.ts
+├── types/
+│   └── media.type.ts
 ├── utils/
+│   ├── mergeUniqueItems.ts
+│   ├── mergeUniqueItems.test.ts
 │   ├── logError.ts
 │   ├── setImage.ts
-│   └── ...
-└── ...
+│   └── index.ts
+├── public/
+│   ├── images/
+│   │   └── ...
+├── __mocks__/
+│   ├── react-modal.tsx
+│   └── data.ts
+.env.example
+.env.local
+.env.test
+README.md
+```
+
+## Deployment
+
+This app can be deployed to any platform that supports Next.js, such as Vercel or Netlify.
+
+```bash
+npm run build
+npm start
 ```
