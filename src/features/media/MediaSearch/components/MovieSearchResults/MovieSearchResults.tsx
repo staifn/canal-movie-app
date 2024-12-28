@@ -11,13 +11,13 @@ interface MovieSearchResultsProps {
 
 export const MovieSearchResults = ({ movies: initialMovies, searchValue }: MovieSearchResultsProps) => {
   const {
-    movies,
-    moviesPage,
-    handleReachEndOfMovieList,
+    items,
+    page,
+    handleReachEndOfList,
   } = useMovieSearchResults({ initialMovies, searchValue })
 
   return (
-      <CardList mediaList={movies} title='Movies' onReachEndOfList={handleReachEndOfMovieList} page={moviesPage} />
+      <CardList mediaList={items} title='Movies' onReachEndOfList={handleReachEndOfList} page={page} />
   );
 }
 

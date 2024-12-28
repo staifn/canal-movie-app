@@ -6,17 +6,17 @@ import { CardList } from "@/components/CardList";
 
 interface SerieSearchResultsProps {
   series: MediaResult;
-  inputValue: string;
+  searchValue: string;
 }
 
 export const SerieSearchResults = ({ series: initialSeries, searchValue }: SerieSearchResultsProps) => {
   const {
-    series,
-    seriesPage,
-    handleReachEndOfSerieList,
+    items,
+    page,
+    handleReachEndOfList,
   } = useSerieSearchResults({ initialSeries, searchValue })
 
   return (
-      <CardList mediaList={series} title='Series' onReachEndOfList={handleReachEndOfSerieList} page={seriesPage} />
+      <CardList mediaList={items} title='Series' onReachEndOfList={handleReachEndOfList} page={page} />
   );
 }

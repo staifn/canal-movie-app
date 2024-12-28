@@ -2,8 +2,7 @@
 
 import { MediaResult } from "@/types/media.type";
 import { useMediaSearch } from './useMediaSearch';
-import { MovieSearchResults } from "./MovieSearchResults";
-import { SerieSearchResults } from "./SerieSearchResults";
+import { MovieSearchResults, SerieSearchResults } from "../components";
 
 interface MediaSearchProps {
   movies: MediaResult;
