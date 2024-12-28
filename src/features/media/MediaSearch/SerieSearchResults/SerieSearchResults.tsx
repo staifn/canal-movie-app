@@ -9,12 +9,12 @@ interface SerieSearchResultsProps {
   inputValue: string;
 }
 
-export const SerieSearchResults = ({ series: initialSeries, inputValue }: SerieSearchResultsProps) => {
+export const SerieSearchResults = ({ series: initialSeries, searchValue }: SerieSearchResultsProps) => {
   const {
     series,
     seriesPage,
     handleReachEndOfSerieList,
-  } = useSerieSearchResults({ initialSeries, inputValue })
+  } = useSerieSearchResults({ initialSeries, searchValue })
 
   return (
       <CardList mediaList={series} title='Series' onReachEndOfList={handleReachEndOfSerieList} page={seriesPage} />

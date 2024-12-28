@@ -4,16 +4,16 @@ import { useRouter, useSearchParams } from 'next/navigation';
 export const useMediaSearch = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [inputValue, setInputValue] = useState(searchParams.get('query') || '');
-  const [debouncedValue, setDebouncedValue] = useState(inputValue);
+  const [searchValue, setSearchValue] = useState(searchParams.get('query') || '');
+  const [debouncedValue, setDebouncedValue] = useState(searchValue);
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(inputValue);
+      setDebouncedValue(searchValue);
     }, 1000);
 
     return () => clearTimeout(handler);
-  }, [inputValue]);
+  }, [searchValue]);
 
   useEffect(() => {
     const queryParam = searchParams.get('query') || '';
@@ -25,7 +25,7 @@ export const useMediaSearch = () => {
   }, [debouncedValue, router, searchParams]);
 
   return useMemo(() => ({
-    setInputValue,
-    inputValue,
-  }), [inputValue]);
+    setSearchValue,
+    searchValue,
+  }), [searchValue]);
 };

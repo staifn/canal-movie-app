@@ -6,15 +6,15 @@ import { CardList } from "@/components/CardList";
 
 interface MovieSearchResultsProps {
   movies: MediaResult;
-  inputValue: string;
+  searchValue: string;
 }
 
-export const MovieSearchResults = ({ movies: initialMovies, inputValue }: MovieSearchResultsProps) => {
+export const MovieSearchResults = ({ movies: initialMovies, searchValue }: MovieSearchResultsProps) => {
   const {
     movies,
     moviesPage,
     handleReachEndOfMovieList,
-  } = useMovieSearchResults({ initialMovies, inputValue })
+  } = useMovieSearchResults({ initialMovies, searchValue })
 
   return (
       <CardList mediaList={movies} title='Movies' onReachEndOfList={handleReachEndOfMovieList} page={moviesPage} />

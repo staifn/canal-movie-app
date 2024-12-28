@@ -12,20 +12,20 @@ interface MediaSearchProps {
 
 export const MediaSearch = ({ movies, series }: MediaSearchProps) => {
   const {
-    inputValue,
-    setInputValue
+    searchValue,
+    setSearchValue
   } = useMediaSearch()
 
   return (
     <>
       <input
         type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
         placeholder="Recherchez..."
       />
-      <MovieSearchResults movies={movies} inputValue={inputValue} />
-      <SerieSearchResults series={series} inputValue={inputValue} />
+      <MovieSearchResults movies={movies} searchValue={searchValue} />
+      <SerieSearchResults series={series} searchValue={searchValue} />
     </>
   );
 }

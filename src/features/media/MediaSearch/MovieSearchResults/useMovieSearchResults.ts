@@ -3,55 +3,45 @@ import { Media, MediaResult } from "@/types/media.type";
 import { searchMovies as searchMoviesUseCase } from '@/lib/useCases/searchMovies';
 import { mergeUniqueItems } from '@/utils/mergeUniqueItems';
 import { getMovies as getMoviesUseCase } from '@/lib/useCases/getMovies';
+import { logError } from '@/utils/logError';
 
 const language = 'en-US';
+const commonQueryParams = {
+  include_adult: false,
+  language,
+};
+
 interface UseMediaSearch {
   initialMovies: Omit<MediaResult, 'totalResults'>;
-  inputValue: string;
+  searchValue: string;
 }
 
-export const useMovieSearchResults = ({ initialMovies, inputValue }: UseMediaSearch) => {
+export const useMovieSearchResults = ({ initialMovies, searchValue }: UseMediaSearch) => {
   const [movies, setMovies] = useState<Media[]>(initialMovies.data);
   const [moviesPage, setMoviesPage] = useState(initialMovies.page);
 
-  const searchMovies = useCallback(async (movies: Media[], query: string, page: number) => {
-    const moviesQueryParams = {
-      include_adult: false,
-      language,
-      page,
-      query,
-    };
+  const fetchMovies = useCallback(async (query: string | null, page: number) => {
+    try {
+      const params = query
+        ? { ...commonQueryParams, page, query }
+        : { ...commonQueryParams, page, include_null_first_air_dates: false, sort_by: 'popularity.desc' };
 
-    const newMovies = await searchMoviesUseCase(moviesQueryParams);
-    setMovies(mergeUniqueItems(movies, newMovies.data));
-  }, []); 
+      const fetchFunction = query ? searchMoviesUseCase : getMoviesUseCase;
+      const newMovies = await fetchFunction(params);
 
-
-  const getMovies = useCallback(async (movies: Media[], page: number) => {
-    const moviesQueryParams = {
-      include_adult: false,
-      language,
-      include_null_first_air_dates: false,
-      sort_by: 'popularity.desc',
-      page,
-    };
-
-    const newMovies = await getMoviesUseCase(moviesQueryParams);
-    setMovies(mergeUniqueItems(movies, newMovies.data));
-  }, []); 
-
-
-  const handleReachEndOfMovieList = useCallback(() => {    
-    if (initialMovies.totalPages === moviesPage) return;
-    const newPage = moviesPage + 1;
-
-    if (inputValue) {
-      searchMovies(movies, inputValue, newPage)
-    }  else {
-      getMovies(movies, newPage);
+      setMovies((prevMovies) => mergeUniqueItems(prevMovies, newMovies.data));
+    } catch (error) {
+      logError(`"Failed to fetch series: "${error}`);
     }
+  }, []);
+
+  const handleReachEndOfMovieList = useCallback(() => {
+    if (initialMovies.totalPages === moviesPage) return;
+
+    const newPage = moviesPage + 1;
+    fetchMovies(searchValue || null, newPage);
     setMoviesPage(newPage);
-  }, [inputValue, getMovies, initialMovies.totalPages, movies, moviesPage, searchMovies]);
+  }, [fetchMovies, initialMovies.totalPages, searchValue, moviesPage]);
 
   useEffect(() => {
     setMovies(initialMovies.data);
@@ -60,7 +50,7 @@ export const useMovieSearchResults = ({ initialMovies, inputValue }: UseMediaSea
 
   return useMemo(() => ({
     handleReachEndOfMovieList,
-    moviesPage,
     movies,
+    moviesPage,
   }), [handleReachEndOfMovieList, movies, moviesPage]);
 };

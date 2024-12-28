@@ -3,69 +3,54 @@ import { Media, MediaResult } from "@/types/media.type";
 import { searchSeries as searchSeriesUseCase } from '@/lib/useCases/searchSeries';
 import { getSeries as getSeriesUseCase } from '@/lib/useCases/getSeries';
 import { mergeUniqueItems } from '@/utils/mergeUniqueItems';
+import { logError } from '@/utils/logError';
 
 const language = 'en-US';
 const commonQueryParams = {
   include_adult: false,
   language,
-  page: 1,
 };
+
 interface UseMediaSearch {
   initialSeries: Omit<MediaResult, 'totalResults'>;
-  inputValue: string;
+  searchValue: string;
 }
 
-export const useSerieSearchResults = ({ initialSeries, inputValue }: UseMediaSearch) => {
+export const useSerieSearchResults = ({ initialSeries, searchValue }: UseMediaSearch) => {
   const [series, setSeries] = useState<Media[]>(initialSeries.data);
   const [seriesPage, setSeriesPage] = useState(initialSeries.page);
 
-  const searchSeries = useCallback(async (series: Media[], query: string, page: number) => {
-    const seriesQueryParams = {
-      include_adult: false,
-      language,
-      page,
-      query,
-    };
+  const fetchSeries = useCallback(async (query: string | null, page: number) => {
+    try {
+      const params = query
+        ? { ...commonQueryParams, page, query }
+        : { ...commonQueryParams, page, include_null_first_air_dates: false, sort_by: 'popularity.desc' };
 
-    const newSeries = await searchSeriesUseCase(seriesQueryParams);
-    setSeries(mergeUniqueItems(series, newSeries.data));
+      const fetchFunction = query ? searchSeriesUseCase : getSeriesUseCase;
+      const newSeries = await fetchFunction(params);
+      
+      setSeries((prevSeries) => mergeUniqueItems(prevSeries, newSeries.data));
+    } catch (error) {
+      logError(`"Failed to fetch series: "${error}`);
+    }
   }, []);
-
-  const getSeries = useCallback(async (series: Media[], page: number) => {
-    const seriesQueryParams = {
-      ...commonQueryParams,
-      include_null_first_air_dates: false,
-      sort_by: 'popularity.desc',
-      page,
-    };
-
-    const newSeries = await getSeriesUseCase(seriesQueryParams);
-    setSeries(mergeUniqueItems(series, newSeries.data));
-  }, []);  
-
 
   const handleReachEndOfSerieList = useCallback(() => {
     if (initialSeries.totalPages === seriesPage) return;
-    const newPage = seriesPage + 1;
 
-    if (inputValue) {
-      searchSeries(series, inputValue, newPage)
-    }  else {
-      getSeries(series, newPage);
-    }
-    
+    const newPage = seriesPage + 1;
+    fetchSeries(searchValue || null, newPage);
     setSeriesPage(newPage);
-  }, [inputValue, getSeries, searchSeries, initialSeries.totalPages, series, seriesPage]);
+  }, [fetchSeries, initialSeries.totalPages, searchValue, seriesPage]);
 
   useEffect(() => {
     setSeries(initialSeries.data);
     setSeriesPage(initialSeries.page);
   }, [initialSeries]);
-  
+
   return useMemo(() => ({
     handleReachEndOfSerieList,
-    inputValue,
-    seriesPage,
     series,
-  }), [handleReachEndOfSerieList, inputValue, series, seriesPage]);
+    seriesPage,
+  }), [handleReachEndOfSerieList, series, seriesPage]);
 };
