@@ -3,7 +3,7 @@ import axiosInstance from "../axiosInstance";
 import { logError } from "@/utils/logError";
 import { API_KEY } from "@/config/config";
 
-export const fetchSeries = async (params = {}): Promise<SerieAPIResponse> => {
+export const fetchSeries = async (params: Record<string, unknown>): Promise<SerieAPIResponse> => {
   try {
     const response = await axiosInstance.get('/discover/tv', {
       params: {
@@ -18,7 +18,7 @@ export const fetchSeries = async (params = {}): Promise<SerieAPIResponse> => {
   }
 };
 
-export const searchSeries = async (params = {}): Promise<SerieAPIResponse> => {
+export const searchSeries = async (params: Record<string, unknown>): Promise<SerieAPIResponse> => {
   try {
     const response = await axiosInstance.get('/search/tv', {
       params: {
