@@ -11,7 +11,7 @@ const commonQueryParams = {
   page: 1,
 };
 interface UseMediaSearch {
-  initialSeries: MediaResult;
+  initialSeries: Omit<MediaResult, 'totalResults'>;
   inputValue: string;
 }
 

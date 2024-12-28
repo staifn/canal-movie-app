@@ -5,13 +5,8 @@ import { mergeUniqueItems } from '@/utils/mergeUniqueItems';
 import { getMovies as getMoviesUseCase } from '@/lib/useCases/getMovies';
 
 const language = 'en-US';
-const commonQueryParams = {
-  include_adult: false,
-  language,
-  page: 1,
-};
 interface UseMediaSearch {
-  initialMovies: MediaResult;
+  initialMovies: Omit<MediaResult, 'totalResults'>;
   inputValue: string;
 }
 
@@ -34,7 +29,8 @@ export const useMovieSearchResults = ({ initialMovies, inputValue }: UseMediaSea
 
   const getMovies = useCallback(async (movies: Media[], page: number) => {
     const moviesQueryParams = {
-      ...commonQueryParams,
+      include_adult: false,
+      language,
       include_null_first_air_dates: false,
       sort_by: 'popularity.desc',
       page,
