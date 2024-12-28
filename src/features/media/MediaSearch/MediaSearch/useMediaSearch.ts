@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+const DEBOUNCE_DELAY = 300;
+
 export const useMediaSearch = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -10,7 +12,7 @@ export const useMediaSearch = () => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedValue(searchValue);
-    }, 1000);
+    }, DEBOUNCE_DELAY);
 
     return () => clearTimeout(handler);
   }, [searchValue]);
