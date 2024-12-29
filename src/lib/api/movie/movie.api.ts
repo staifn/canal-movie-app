@@ -14,7 +14,7 @@ export const fetchMovies = async (params: Record<string, unknown>): Promise<Movi
     return response.data;
   } catch (error) {
     logError(error);
-    throw error;
+    throw new Error("Failed to fetch movies. Please try again later.");
   }
 };
 
@@ -29,6 +29,6 @@ export const searchMovies = async (params: Record<string, unknown>): Promise<Mov
     return response.data;
   } catch (error) {
     logError(error);
-    throw error;
+    throw new Error("Failed to search movies. Please try again later.");
   }
 };

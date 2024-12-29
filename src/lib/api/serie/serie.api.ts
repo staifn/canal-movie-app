@@ -14,7 +14,7 @@ export const fetchSeries = async (params: Record<string, unknown>): Promise<Seri
     return response.data;
   } catch (error) {
     logError(error);
-    throw error;
+    throw new Error("Failed to fetch series. Please try again later.");
   }
 };
 
@@ -29,6 +29,6 @@ export const searchSeries = async (params: Record<string, unknown>): Promise<Ser
     return response.data;
   } catch (error) {
     logError(error);
-    throw error;
+    throw new Error("Failed to search series. Please try again later.");
   }
 };
