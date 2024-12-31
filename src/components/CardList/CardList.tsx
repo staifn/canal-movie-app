@@ -5,7 +5,8 @@ import styles from './CardList.module.css';
 import Image from 'next/image';
 import { Media } from '@/types/media.type';
 import { useCardList } from './useCardList';
-import { Modal } from '../Modal';
+import dynamic from 'next/dynamic';
+const Modal= dynamic(() => import('../Modal').then(mod => mod.Modal), { ssr: false })
 
 interface CardListProps {
   mediaList: Media[];

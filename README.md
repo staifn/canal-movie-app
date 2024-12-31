@@ -71,6 +71,27 @@ Run the unit and integration tests with Jest:
 npm run test
 ```
 
+## Bundle Analysis
+
+To generate and view the bundle analysis (including dynamic chunk sizes), use the following script:
+
+```bash
+npm run bundle:analyze
+```
+
+This will build the project and generate an interactive visualization of your bundles, helping you identify large dependencies and potential optimizations.
+
+### Running the Analysis
+
+You can view the bundle analysis in your browser by opening the following files:
+
+```bash
+.next/analyze/client.html
+.next/analyze/nodejs.html
+```
+
+This will open a visualization of the sizes of your JavaScript chunks, allowing you to see how your code is split and which chunks may need optimization.
+
 ## Project Structure
 
 ```plaintext

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactModal from 'react-modal';
-import Image from 'next/image'; // Import du composant Image de Next.js
+import Image from 'next/image';
 import styles from './Modal.module.css';
 import { Media } from '@/types/media.type';
 
@@ -27,7 +27,7 @@ export const Modal = ({ isOpen, onClose, onAfterOpen, data }: ModalProps) => {
       overlayClassName={styles.overlay}
       contentLabel="Movie Details Modal"
     >
-      <button onClick={onClose} className={styles.closeButton}>
+      <button onClick={onClose} className={styles.closeButton} aria-label="Close">
         ✕
       </button>
       <div className={styles.modalInner}>
