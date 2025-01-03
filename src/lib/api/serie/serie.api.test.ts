@@ -1,6 +1,6 @@
-import { fetchSeries, searchSeries } from "./serie.api";
-import axiosInstance from "../axiosInstance";
 import { logError } from "../../../utils/logError";
+import axiosInstance from "../axiosInstance";
+import { fetchSeries, searchSeries } from "./serie.api";
 import { SerieAPIResponse } from "./serie.type";
 
 jest.mock("../axiosInstance");
@@ -52,7 +52,7 @@ describe("serie.api", () => {
     });
 
     it("should log error and throw when request fails", async () => {
-      const mockError = new Error("Network error");
+      const mockError = new Error("Failed to fetch series. Please try again later.");
       (axiosInstance.get as jest.Mock).mockRejectedValueOnce(mockError);
 
       await expect(fetchSeries()).rejects.toThrow(mockError);
@@ -77,7 +77,7 @@ describe("serie.api", () => {
     });
 
     it("should log error and throw when request fails", async () => {
-      const mockError = new Error("Network error");
+      const mockError = new Error("Failed to search series. Please try again later.");
       (axiosInstance.get as jest.Mock).mockRejectedValueOnce(mockError);
 
       await expect(searchSeries()).rejects.toThrow(mockError);

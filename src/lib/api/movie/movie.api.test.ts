@@ -1,6 +1,6 @@
-import { fetchMovies, searchMovies } from "./movie.api";
-import axiosInstance from "../axiosInstance";
 import { logError } from "../../../utils/logError";
+import axiosInstance from "../axiosInstance";
+import { fetchMovies, searchMovies } from "./movie.api";
 import { MovieAPIResponse } from "./movie.type";
 
 jest.mock("../axiosInstance");
@@ -52,7 +52,7 @@ describe("movie.api", () => {
     });
 
     it("should log error and throw when request fails", async () => {
-      const mockError = new Error("Network error");
+      const mockError = new Error("Failed to fetch movies. Please try again later.");
       (axiosInstance.get as jest.Mock).mockRejectedValueOnce(mockError);
 
       await expect(fetchMovies()).rejects.toThrow(mockError);
@@ -77,7 +77,7 @@ describe("movie.api", () => {
     });
 
     it("should log error and throw when request fails", async () => {
-      const mockError = new Error("Network error");
+      const mockError = new Error("Failed to search movies. Please try again later.");
       (axiosInstance.get as jest.Mock).mockRejectedValueOnce(mockError);
 
       await expect(searchMovies()).rejects.toThrow(mockError);
